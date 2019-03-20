@@ -1,0 +1,43 @@
+cmake_minimum_required (VERSION 3.1) 
+set (CMAKE_CPP_STANDARD 15)
+set (CMAKE_C_STANDARD 15)
+set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+set(CMAKE_CXX_FLAGS_DEBUG "/MTd /Od")
+project (Library)
+
+ 
+ 
+
+ADD_DEFINITIONS(
+-D__STDC_LIMIT_MACROS
+-D__STDC_FORMAT_MACROS
+-D__STDC_CONSTANT_MACROS
+-D_HAS_ITERATOR_DEBUGGING=0
+-D_DEBUG
+-DWIN32
+-D_WIN32
+-D_HAS_EXCEPTIONS=0
+-D_HAS_ITERATOR_DEBUGGING=0
+-D_SCL_SECURE=0
+-D_SECURE_SCL=0
+-D_SCL_SECURE_NO_WARNINGS
+-D_CRT_SECURE_NO_WARNINGS
+-D_CRT_SECURE_NO_DEPRECATE
+ /Zi
+)
+
+include_directories ("${PROJECT_SOURCE_DIR}/Math")
+add_subdirectory (Math)
+
+include_directories ("${PROJECT_SOURCE_DIR}/UnitTest++")
+add_subdirectory (UnitTest++)
+
+add_executable(LibraryTest
+main.cpp
+)
+target_link_libraries(LibraryTest
+UnitTest++ 
+Math
+)
+SET_TARGET_PROPERTIES(LibraryTest PROPERTIES LINK_FLAGS_DEBUG "/WHOLEARCHIVE:Math")
+SET_TARGET_PROPERTIES(LibraryTest PROPERTIES LINK_FLAGS_RELEASE "/WHOLEARCHIVE:Math")
