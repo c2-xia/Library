@@ -4,5 +4,5 @@ add_library(Math
 	./Function/test.cpp
 	./Memory/test.cpp
 	./Memory/New.cpp
-	defines.cpp
+	./Std/test.cpp
 )

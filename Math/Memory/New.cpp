@@ -1,20 +1,14 @@
 #include <string.h>
 #include <new>
+#include "../defines.h"
 
 #define XIA_LL_ALLOC(l,s,a) ::malloc(s)
 #define XIA_LL_REALLOC(l,p,s,a) ::realloc(p, s)
 #define XIA_LL_FREE(l,p) ::free(p)
 
-void* malloc_internal(size_t size, int align, char* label, int allocateOptions, const char* file, int line);
-void* calloc_internal(size_t count, size_t size, int align, char* label, int allocateOptions, const char* file, int line);
-void* realloc_internal(void* ptr, size_t size, int align, char* label, int allocateOptions, const char* file, int line);
-void  free_alloc_internal(void* ptr, char* label);
 
-enum
-{
-	kAllocateOptionNone = 0,						// Fatal: Show message box with out of memory error and quit application
-	kAllocateOptionReturnNullIfOutOfMemory = 1	// Returns null if allocation fails (doesn't show message box)
-};
+
+
 
 void* operator new (size_t size, char* label, bool set_root, int align, const char* file, int line)
 { 
