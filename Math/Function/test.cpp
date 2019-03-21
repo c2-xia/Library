@@ -7,9 +7,6 @@ using namespace UnitTest;
 namespace {
  
 	 
-   TEST(XXXX)
-   {
-     
-   }
+    
 
 }
