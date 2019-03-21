@@ -130,13 +130,11 @@ public:
 	iterator insert(iterator insertBefore, const T& t) { return insert(insertBefore, &t, &t + 1); }
 
 	void swap(dynamic_array& other) throw()
-	{
-		if (m_data) UNITY_TRANSFER_OWNERSHIP_TO_HEADER(m_data, m_label, other.m_label.GetRootHeader());
-		if (other.m_data) UNITY_TRANSFER_OWNERSHIP_TO_HEADER(other.m_data, other.m_label, m_label.GetRootHeader());
+	{  
 		std::swap(m_data, other.m_data);
 		std::swap(m_size, other.m_size);
 		std::swap(m_capacity, other.m_capacity);
-		std::swap(m_label, other.m_label);
+
 	}
 
 	T& push_back()

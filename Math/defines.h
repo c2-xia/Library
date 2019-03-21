@@ -17,6 +17,8 @@
 
 #define CompileTimeAssert(x,y)
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
 enum
 {
 	kAllocateOptionNone = 0,						// Fatal: Show message box with out of memory error and quit application
