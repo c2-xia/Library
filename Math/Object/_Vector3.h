@@ -1,5 +1,15 @@
 struct _Vector3 {
-
+	_Vector3()
+	{
+		x  = y = z = 0;
+	}
+	_Vector3(real xx,real yy,real zz):
+		x(xx),
+		y(yy),
+		z(zz)
+	{
+		 
+	}
 	union {
 		struct {
 			real x;
@@ -8,4 +18,4 @@ struct _Vector3 {
 		};
 		real coord[3];
 	};
-}
+};

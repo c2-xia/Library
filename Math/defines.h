@@ -23,13 +23,14 @@
 #define CompileTimeAssert(x,y)
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
-
+#define Epsilon   1.17549435E-38f
 enum
 {
 	kAllocateOptionNone = 0,						// Fatal: Show message box with out of memory error and quit application
 	kAllocateOptionReturnNullIfOutOfMemory = 1	// Returns null if allocation fails (doesn't show message box)
 };
 
+#define real float
 
 enum
 {
