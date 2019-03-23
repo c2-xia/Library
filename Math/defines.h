@@ -1,3 +1,8 @@
+#ifndef DEFINES_H
+#define DEFINES_H
+
+
+
 #if defined(__GNUC__)
 #define ALIGN_OF(T) __alignof__(T)
 #define ALIGN_TYPE(val) __attribute__((aligned(val)))
@@ -25,6 +30,16 @@ enum
 	kAllocateOptionReturnNullIfOutOfMemory = 1	// Returns null if allocation fails (doesn't show message box)
 };
 
+
+enum
+{
+#if XIA_ANDROID 
+	kDefaultMemoryAlignment = 16
+#else
+	kDefaultMemoryAlignment = sizeof(void*)
+#endif
+};
+
 void* malloc_internal(size_t size, int align, char* label, int allocateOptions, const char* file, int line);
 void* calloc_internal(size_t count, size_t size, int align, char* label, int allocateOptions, const char* file, int line);
 void* realloc_internal(void* ptr, size_t size, int align, char* label, int allocateOptions, const char* file, int line);
@@ -38,3 +53,7 @@ void  free_alloc_internal(void* ptr, char* label);
 #define XIA_REALLOC_(label, ptr, size)               realloc_internal(ptr, size, kDefaultMemoryAlignment, label, kAllocateOptionNone, __FILE__, __LINE__)
 #define XIA_REALLOC_ALIGNED(label, ptr, size, align) realloc_internal(ptr, size, align, label, kAllocateOptionNone, __FILE__, __LINE__)
 #define XIA_FREE(label, ptr)                         free_alloc_internal(ptr, label)
+
+
+#endif // !DEFINES_H
+

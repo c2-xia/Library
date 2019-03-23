@@ -7,19 +7,19 @@
 #define XIA_LL_FREE(l,p) ::free(p)
 
 
-
-
-
 void* operator new (size_t size, char* label, bool set_root, int align, const char* file, int line)
 { 
 	void* p = malloc_internal(size, align, label, kAllocateOptionNone, file, line); 
 	return p;
 }
+
 void* operator new [](size_t size, char* label, bool set_root, int align, const char* file, int line)
 { 
 	void* p = malloc_internal(size, align, label, kAllocateOptionNone, file, line);
 	return p;
 }
+
+
 void operator delete (void* p, char* label, bool /*set_root*/, int /*align*/, const char* /*file*/, int /*line*/) { free_alloc_internal(p, label); }
 void operator delete [](void* p, char* label, bool /*set_root*/, int /*align*/, const char* /*file*/, int /*line*/) { free_alloc_internal(p, label); }
 
