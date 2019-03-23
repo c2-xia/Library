@@ -8,6 +8,8 @@ project (Library)
  
  
 
+source_group("Include" FILES ${CURRENT_HEADERS}) 
+
 ADD_DEFINITIONS(
 -D__STDC_LIMIT_MACROS
 -D__STDC_FORMAT_MACROS
@@ -34,6 +36,7 @@ add_subdirectory (UnitTest++)
 
 add_executable(LibraryTest
 main.cpp
+
 )
 target_link_libraries(LibraryTest
 UnitTest++ 
