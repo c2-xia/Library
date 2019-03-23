@@ -4,11 +4,12 @@
 #include "Object/_Vector3.h"
 #include "operator.h"
 #include "Lerp.h"
-
+#include "Floor.h"
+#include "Repeat.h"
 using namespace UnitTest;
 
 namespace {
- 
+
 	TEST(LerpTest)
 	{
 		_Vector3 v;
@@ -26,5 +27,17 @@ namespace {
 		CHECK_EQUAL(v_real2, t);
 	}
     
+	TEST(FloorTest)
+	{ 
+		CHECK_EQUAL(Floor(2.3f), 2);
+		CHECK_EQUAL(Floor(0.6f), 0);
+		CHECK_EQUAL(Floor(-2.3f), -3);
+	}
+
+	TEST(RepeatTest)
+	{
+		real v = Repeat(5.0f, 4.5f);
+		CHECK_EQUAL(v, 0.5);
+	}
 
 }
