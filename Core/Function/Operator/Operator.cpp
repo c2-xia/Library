@@ -1,6 +1,6 @@
-#include "../defines.h"
-#include "../Object/_vector3.h"
- 
+#include "../../defines.h"
+#include "../../Object/_vector3.h"
+
 _Vector3 operator -(_Vector3& a, _Vector3& b)
 {
 	return _Vector3(a.x - b.x,

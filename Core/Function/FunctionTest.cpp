@@ -2,10 +2,10 @@
 
 #include "defines.h"
 #include "Object/_Vector3.h"
-#include "operator.h"
-#include "Lerp.h"
-#include "Floor.h"
-#include "Repeat.h"
+#include "Operator/Operator.h"
+#include "Math/Lerp.h"
+#include "Math/Floor.h"
+#include "Math/Repeat.h"
 using namespace UnitTest;
 
 namespace {

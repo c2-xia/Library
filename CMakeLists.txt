@@ -6,7 +6,32 @@ set(CMAKE_CXX_FLAGS_DEBUG "/MTd /Od")
 project (Library)
 
  
- 
+ function(assign_source_group)
+    foreach(_source IN ITEMS ${ARGN})
+        if (IS_ABSOLUTE "${_source}")
+            file(RELATIVE_PATH _source_rel "${CMAKE_CURRENT_SOURCE_DIR}" "${_source}")
+        else()
+            set(_source_rel "${_source}")
+        endif()
+        get_filename_component(_source_path "${_source_rel}" PATH)
+        string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
+        source_group("${_source_path_msvc}" FILES "${_source}")
+    endforeach()
+endfunction(assign_source_group)
+
+function(my_add_executable)
+    foreach(_source IN ITEMS ${ARGN})
+        assign_source_group(${_source})
+    endforeach()
+    add_executable(${ARGV})
+endfunction(my_add_executable)
+
+function(my_add_library)
+    foreach(_source IN ITEMS ${ARGN})
+        assign_source_group(${_source})
+    endforeach()
+    add_library(${ARGV})
+endfunction(my_add_library)
 
 source_group("Include" FILES ${CURRENT_HEADERS}) 
 
@@ -28,19 +53,19 @@ ADD_DEFINITIONS(
  /Zi
 )
 
-include_directories ("${PROJECT_SOURCE_DIR}/Math")
-add_subdirectory (Math)
+include_directories ("${PROJECT_SOURCE_DIR}/Core")
+add_subdirectory (Core)
 
 include_directories ("${PROJECT_SOURCE_DIR}/UnitTest++")
 add_subdirectory (UnitTest++)
 
-add_executable(LibraryTest
+my_add_executable(LibraryTest
 main.cpp
-
 )
 target_link_libraries(LibraryTest
 UnitTest++ 
-Math
+Core
 )
-SET_TARGET_PROPERTIES(LibraryTest PROPERTIES LINK_FLAGS_DEBUG "/WHOLEARCHIVE:Math")
-SET_TARGET_PROPERTIES(LibraryTest PROPERTIES LINK_FLAGS_RELEASE "/WHOLEARCHIVE:Math")
+
+SET_TARGET_PROPERTIES(LibraryTest PROPERTIES LINK_FLAGS_DEBUG "/WHOLEARCHIVE:Core")
+SET_TARGET_PROPERTIES(LibraryTest PROPERTIES LINK_FLAGS_RELEASE "/WHOLEARCHIVE:Core")
