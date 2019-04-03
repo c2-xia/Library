@@ -2,6 +2,13 @@
 #include <new>
 #include "../defines.h"
 
+/*
+	重写new和delete的目的是在new和delete这层逻辑中添加自己的逻辑，
+	比如监测内存的申请情况
+	是否线程安全，取决于链接的时候，是否链接的线程安全库
+*/
+
+
 #define XIA_LL_ALLOC(l,s,a) ::malloc(s)
 #define XIA_LL_REALLOC(l,p,s,a) ::realloc(p, s)
 #define XIA_LL_FREE(l,p) ::free(p)

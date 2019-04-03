@@ -1,5 +1,11 @@
-#include "Std/dynamic_array.h"
+#include "STD/dynamic_array.h"
 
+
+/*
+	MemoryPool 用于在游戏客户端程序中，一次性申请足够使用的内存，
+	从而避免游戏运行过程中，new内存，而恰巧内存不够用，需要向操
+	作系统申请内存，而且造成上下文切换，造成卡顿。
+*/
 class MemoryPool
 {
 public:

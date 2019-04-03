@@ -1,3 +1,4 @@
+//vecotr3µÄ¼òµ¥ÉùÃ÷
 struct _Vector3 {
 	_Vector3():x(0),y(0),z(0)
 	{ 
