@@ -1,0 +1,38 @@
+cmake_minimum_required (VERSION 3.1) 
+ 
+file(GLOB_RECURSE CURRENT_HEADERS  *.h *.hpp)
+
+my_add_library(Yaml
+	contrib/graphbuilder.cpp
+	contrib/graphbuilderadapter.cpp
+	binary.cpp
+	convert.cpp
+	directives.cpp
+	emit.cpp
+	emitfromevents.cpp
+	emitter.cpp
+	emitterstate.cpp
+	emitterutils.cpp
+	exceptions.cpp
+	exp.cpp
+	memory.cpp
+	node.cpp
+	nodebuilder.cpp
+	nodeevents.cpp
+	node_data.cpp
+	null.cpp
+	ostream_wrapper.cpp
+	parse.cpp
+	parser.cpp
+	regex_yaml.cpp
+	scanner.cpp
+	scanscalar.cpp
+	scantag.cpp
+	scantoken.cpp
+	simplekey.cpp
+	singledocparser.cpp
+	stream.cpp
+	tag.cpp
+	${CURRENT_HEADERS}
+)
+ 

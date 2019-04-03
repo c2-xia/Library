@@ -1,0 +1,1 @@
+DIR *.c  /B >LIST.TXT
