@@ -1,5 +1,5 @@
-#ifndef DEFINES_H
-#define DEFINES_H
+#ifndef _DEFINES_H
+#define _DEFINES_H
 
 
 
@@ -56,5 +56,5 @@ void  free_alloc_internal(void* ptr, char* label);
 #define XIA_FREE(label, ptr)                         free_alloc_internal(ptr, label)
 
 
-#endif // !DEFINES_H
+#endif // !_DEFINES_H
 

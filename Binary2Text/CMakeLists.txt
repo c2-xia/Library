@@ -67,6 +67,7 @@ _demo/relationdata2Text/Relationdata2Text.cpp
 _demo/simpledata2Text/Simpledata2Text.cpp
 ReaderWriter/extraFunction.cpp
 ReaderWriter/Yaml/YamlWriter.cpp
+_demo/relationdata2Text/New.cpp
 ${CURRENT_HEADERS}
 )
 

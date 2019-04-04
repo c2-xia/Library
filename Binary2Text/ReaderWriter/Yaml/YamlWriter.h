@@ -28,8 +28,13 @@ struct YamlWriter
 	template<typename T>
 	void transferBasicData(T& value);
 
+	template<class T>
+	void TransferStringData(T& data);
+
 	void TransferStringToCurrentNode(const char* str);
-	 
+	template<class T>
+	void TransferSTLStyleArray(T& data);
+
 	std::string toString()
 	{
 		if (_pCashNode)
@@ -39,8 +44,48 @@ struct YamlWriter
 	}
 };
 
+template<class T>
+inline void YamlWriter::TransferStringData(T& data)
+{
+	TransferStringToCurrentNode(data.c_str());
+}
 
+template<class T>
+void YamlWriter::TransferSTLStyleArray(T& data)
+{
+	typedef typename NonConstContainerValueType<T>::value_type non_const_value_type;
+	if (Trait<non_const_value_type>::ShouldSerializeArrayAsCompactString())
+	{
+#if UNITY_BIG_ENDIAN
+#error "Needs swapping to be implemented to work on big endian platforms!"
+#endif
+		std::string str;
+		size_t numElements = data.size();
+		size_t numBytes = numElements * sizeof(non_const_value_type);
+		str.resize(numBytes * 2);
 
+		typename T::iterator dataIterator = data.begin();
+		for (size_t i = 0; i < numElements; i++)
+		{
+			BytesToHexString((void*)&*dataIterator, sizeof(non_const_value_type), &str[i * 2 * sizeof(non_const_value_type)]);
+			++dataIterator;
+		}
+
+		TransferStringData(str);
+	}
+	else
+	{
+		this->_pCashNode = new YAML::Node(YAML::NodeType::Sequence);
+		this->willdeleteVector.push_back(this->_pCashNode);
+		typename T::iterator i = data.begin();
+		typename T::iterator end = data.end();
+		while (i != end)
+		{
+			transfer("data", *i);
+			++i;
+		}
+	}
+}
 
 template<typename T>
 void YamlWriter::transfer(const char* name, T& value)
@@ -48,7 +93,8 @@ void YamlWriter::transfer(const char* name, T& value)
 	YAML::Node* parent = NULL;
 	if (_pCashNode == NULL)
 	{
-		parent = new YAML::Node();
+		parent = new YAML::Node(YAML::NodeType::Map);
+		 
 		this->willdeleteVector.push_back(parent);
 	}		
 	else
@@ -60,7 +106,15 @@ void YamlWriter::transfer(const char* name, T& value)
 	//设置父子关系
 	if (_pCashNode != parent && _pCashNode != NULL)
 	{
-		(*parent)[name] = *_pCashNode;
+		if (parent->IsMap())
+		{
+			(*parent)[name] = *_pCashNode;
+		}
+		else
+		{
+			(*parent).push_back(*_pCashNode);
+		}
+		
 	}
 	_pCashNode = parent;
 }

@@ -10,7 +10,7 @@ YamlWriter::~YamlWriter()
 
 void YamlWriter::TransferStringToCurrentNode(const char* str)
 {
-	this->_pCashNode = new YAML::Node();
+	this->_pCashNode = new YAML::Node(YAML::NodeType::Scalar);
 	(*this->_pCashNode) = str;
 	this->willdeleteVector.push_back(this->_pCashNode);
 }
