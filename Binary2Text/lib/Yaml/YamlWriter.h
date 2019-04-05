@@ -18,6 +18,13 @@ struct YamlWriter
 	~YamlWriter();
 	YAML::Node* _pCashNode;
 	std::vector< YAML::Node*> willdeleteVector;
+	int get(int oldID) { return 0; }
+
+	void set(int oldID, int newID) { }
+	int type()
+	{
+		return 1;//1 write,0 reader
+	}
 	template<typename T>
 	void transfer(const char* name, T& value);
 

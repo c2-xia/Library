@@ -5,6 +5,7 @@
 #include "lib/Yaml/Trait.h"
 #include "trait_dynamic_array.h"
 #include "lib/Yaml/YamlWriter.h"
+#include "lib/Yaml/YamlReader.h"
 
 #include "dynamic_array.h"
 
@@ -24,7 +25,16 @@ namespace Realtiondata2Text
 		template<typename TransferFunction>
 		void Transfer(TransferFunction& transfer)
 		{
-			mTransfer(id);
+			if (transfer.type() == 0)//reader
+			{
+				int oldID;
+				transfer.transfer("id", oldID);
+				transfer.set(oldID, id);
+			}
+			else
+			{
+				mTransfer(id);
+			}
 		}
 	};
 
@@ -53,8 +63,17 @@ namespace Realtiondata2Text
 		int refrenceID;
 		template<typename TransferFunction>
 		void Transfer(TransferFunction& transfer)
-		{ 
-			mTransfer(refrenceID);
+		{  
+			if (transfer.type()==0)//reader
+			{
+				int oldID;
+				transfer.transfer("refrenceID",oldID);
+				refrenceID = transfer.get(oldID);
+			}
+			else if (transfer.type() == 1)//writer
+			{
+				mTransfer(refrenceID);
+			}			
 		}
 	};
 
@@ -84,7 +103,7 @@ namespace Realtiondata2Text
 		writer.transfer("ClassRoom", obj);
 		return writer.toString();
 	}
-
+	 
 	void _Main()
 	{
 		Student obj;
@@ -95,8 +114,17 @@ namespace Realtiondata2Text
 		ClassRoom room;
 		room.addStudent(obj);
 		room.addStudent(obj);
-		std::string result = toYaml(room);
+		YamlWriter writer;
+		writer.transfer("ClassRoom", room);
+		writer.transfer("Student", obj); 
+		std::string result = writer.toString();
 		
+		Student obj2;
+		ClassRoom room2;
+		YamlReader reader(result);
+		reader.transfer("Student", obj2);
+		reader.transfer("ClassRoom", room2);		
+		auto id =room2.students[1].refrenceID;
 		int i = 0;
 	}
 

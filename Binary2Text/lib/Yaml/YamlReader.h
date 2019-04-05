@@ -18,6 +18,21 @@ struct YamlReader
 	};
 	YAML::Node root;
 	YAML::Node* _pCashNode;
+	std::map<int, int> remap;
+	int get(int oldID)
+	{
+		return remap[oldID];
+	}
+
+	void set(int oldID,int newID)
+	{
+		remap[oldID] = newID;
+	}
+
+	int type()
+	{
+		return 0;//1 write,0 reader
+	}
 
 	template<typename T>
 	void transfer(const char* name, T& value);
@@ -76,7 +91,7 @@ inline void YamlReader::TransferSTLStyleArray(T& data)
 		TransferStringData(str);
 		size_t byteLength = str.size() / 2;
 		size_t numElements = byteLength / sizeof(non_const_value_type);
-		SerializeTraits<T>::ResizeSTLStyleArray(data, numElements);
+		Trait<T>::ResizeSTLStyleArray(data, numElements);
 		typename T::iterator dataIterator = data.begin();
 		for (size_t i = 0; i < numElements; i++)
 		{
@@ -88,14 +103,14 @@ inline void YamlReader::TransferSTLStyleArray(T& data)
 
 	case YAML::NodeType::value::Sequence:
 	{  
-		SerializeTraits<T>::ResizeSTLStyleArray(data, _pCashNode->size());
+		Trait<T>::ResizeSTLStyleArray(data, _pCashNode->size());
 		typename T::iterator dataIterator = data.begin();
 
 		YAML::Node * now_node = _pCashNode;
-		for (const_iterator it = now_node->begin(); it != now_node->end(); ++it)
+		for (auto it = now_node->begin(); it != now_node->end(); ++it)
 		{
-			_pCashNode = *it;
-			YAMLSerializeTraits<non_const_value_type>::Transfer(*dataIterator, *this);
+			_pCashNode = &(*it);
+			Trait<non_const_value_type>::transfer( *this, *dataIterator);
 			++dataIterator;
 		}
 	}
@@ -126,10 +141,10 @@ inline void YamlReader::TransferSTLStyleArray(T& data)
 	break;
 
 	default:
-		ErrorString("Unexpected node type.");
+		 Assert(false);
 	}
 
-	m_CurrentNode = parentNode;
+	_pCashNode = parentNode;
 }
 
 template<typename T>

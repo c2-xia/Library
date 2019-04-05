@@ -9,4 +9,5 @@ struct Trait<dynamic_array<T, align>>
 	{
 		function.TransferSTLStyleArray(value);
 	}
+	static void ResizeSTLStyleArray(value_type& data, int rs) { data.resize_initialized(rs); }
 };

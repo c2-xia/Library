@@ -182,6 +182,8 @@ struct Trait<std::string> :public YAMLTraitsForBasicType<bool>
 	{
 		function.TransferStringData(value);
 	}
+
+	 
 };
 
 
