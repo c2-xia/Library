@@ -65,8 +65,9 @@ my_add_executable(Binary2Text
 _demo/main.cpp
 _demo/relationdata2Text/Relationdata2Text.cpp
 _demo/simpledata2Text/Simpledata2Text.cpp
-ReaderWriter/extraFunction.cpp
-ReaderWriter/Yaml/YamlWriter.cpp
+lib/Yaml/extraFunction.cpp
+lib/Yaml/YamlWriter.cpp
+lib/Yaml/YamlReader.cpp
 _demo/relationdata2Text/New.cpp
 ${CURRENT_HEADERS}
 )

@@ -8,6 +8,8 @@ YamlWriter::~YamlWriter()
 	}
 }
 
+
+
 void YamlWriter::TransferStringToCurrentNode(const char* str)
 {
 	this->_pCashNode = new YAML::Node(YAML::NodeType::Scalar);
@@ -15,7 +17,7 @@ void YamlWriter::TransferStringToCurrentNode(const char* str)
 	this->willdeleteVector.push_back(this->_pCashNode);
 }
 
-
+ 
 
 template<>
 inline void YamlWriter::transferBasicData<UInt64>(UInt64& data)

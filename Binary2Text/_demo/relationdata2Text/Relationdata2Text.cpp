@@ -2,11 +2,9 @@
 #include <string>
 
 #include "defines.h"
-#include "ReaderWriter/Trait.h"
+#include "lib/Yaml/Trait.h"
 #include "trait_dynamic_array.h"
-#include "ReaderWriter/Yaml/YamlWriter.h"
-
-
+#include "lib/Yaml/YamlWriter.h"
 
 #include "dynamic_array.h"
 

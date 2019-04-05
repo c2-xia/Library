@@ -1,4 +1,4 @@
-#include "../ReaderWriter/Trait.h"
+#include "../lib/Yaml/Trait.h"
 #include "dynamic_array.h"
 template<class T, size_t align>
 struct Trait<dynamic_array<T, align>>

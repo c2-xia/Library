@@ -4,7 +4,7 @@
 
 #include "defines.h"
 #include <string>
-#include "../extraFunction.h"
+#include "extraFunction.h"
 #include "../../Yaml/yaml-cpp/node/node.h"
 #include "../../Yaml/yaml-cpp/emitter.h"
 #include "../../Yaml/yaml-cpp/node/convert.h"
@@ -14,7 +14,6 @@
 #include "../../Yaml/yaml-cpp/node/iterator.h"
 struct YamlWriter
 {
-	
 	YamlWriter() :_pCashNode(NULL){};
 	~YamlWriter();
 	YAML::Node* _pCashNode;

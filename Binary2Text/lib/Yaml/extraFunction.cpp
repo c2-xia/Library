@@ -19,7 +19,7 @@ bool DoubleToStringAccurate(double f, char* buffer, size_t maximumSize)
 	return g_dfmt(buffer, (double*)&f, kMaxDoubleDigits, maximumSize) != NULL;
 }
 
-void HexStringToBytes(char* str, size_t bytes, void *data)
+void HexStringToBytes(const char* str, size_t bytes, void *data)
 {
 	for (size_t i = 0; i < bytes; i++)
 	{
@@ -39,7 +39,15 @@ void HexStringToBytes(char* str, size_t bytes, void *data)
 		((UInt8*)data)[i] = b;
 	}
 }
+float StringToFloatAccurate(const char* buffer)
+{
+	return strtof(buffer, NULL);
+}
 
+double StringToDoubleAccurate(const char* buffer)
+{
+	return strtod(buffer, NULL);
+}
 
 void BytesToHexString(const void *data, size_t bytes, char* str)
 {

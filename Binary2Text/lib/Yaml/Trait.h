@@ -180,7 +180,7 @@ struct Trait<std::string> :public YAMLTraitsForBasicType<bool>
 	template<typename TransferFunction>
 	inline	static void transfer(TransferFunction& function, std::string& value)
 	{
-		function.TransferStringToCurrentNode(value.c_str());
+		function.TransferStringData(value);
 	}
 };
 
