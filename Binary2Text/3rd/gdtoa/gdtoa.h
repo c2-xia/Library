@@ -111,14 +111,10 @@ extern char* gdtoa ANSI((FPI *fpi, int be, ULong *bits, int *kindp,
 			int mode, int ndigits, int *decpt, char **rve));
 extern void freedtoa ANSI((char*));
 #if !defined(__flash__)
+extern float  strtof_gdtoa ANSI((CONST char *, char **));
+#endif 
+extern double strtod_gdtoa ANSI((CONST char *, char **));
  
-#ifndef _INC_STDLIB
-extern float  strtof ANSI((CONST char *, char **));
-#endif
-#endif
-#ifndef _INC_STDLIB
-extern double strtod ANSI((CONST char *, char **));
-#endif
 extern int strtodg ANSI((CONST char*, char**, FPI*, Long*, ULong*));
 
 extern char*	g_ddfmt  ANSI((char*, double*, int, size_t));

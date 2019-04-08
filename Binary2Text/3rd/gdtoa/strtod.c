@@ -45,7 +45,7 @@ THIS SOFTWARE.
 #define Avoid_Underflow
 #undef tinytens
 /* The factor of 2^106 in tinytens[4] helps us avoid setting the underflow */
-/* flag unnecessarily.  It leads to a song and dance at the end of strtod. */
+/* flag unnecessarily.  It leads to a song and dance at the end of strtod_gdtoa. */
 static CONST double tinytens[] = { 1e-16, 1e-32, 1e-64, 1e-128,
 		9007199254740992.*9007199254740992.e-256
 		};
@@ -81,9 +81,9 @@ sulp
 	}
 #endif /*}*/
 
-#ifndef _INC_STDLIB
+ 
  double
-strtod
+strtod_gdtoa
 #ifdef KR_headers
 	(s00, se) CONST char *s00; char **se;
 #else
@@ -1075,4 +1075,4 @@ strtod
 	return sign ? -dval(&rv) : dval(&rv);
 	}
 
-#endif
+ 

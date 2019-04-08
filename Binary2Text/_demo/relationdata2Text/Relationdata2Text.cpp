@@ -93,7 +93,7 @@ namespace Realtiondata2Text
 		void Transfer(TransferFunction& transfer)
 		{
 			super::Transfer(transfer);
-			mTransfer(students);			 
+			mTransfer(students);
 		}
 	};
 	//还原数据关系时，严格还原了对象的创建顺序，所以链接的时候，不会出现空值
@@ -122,9 +122,9 @@ namespace Realtiondata2Text
 		Student obj2;
 		ClassRoom room2;
 		YamlReader reader(result);
-		reader.transfer("Student", obj2);
+		reader.transfer("Student", obj2);//这里的反序列化必须是按照序列化之前顺序反转过来进行的。
 		reader.transfer("ClassRoom", room2);		
-		auto id =room2.students[1].refrenceID;
+		auto id = room2.students[1].refrenceID;
 		int i = 0;
 	}
 

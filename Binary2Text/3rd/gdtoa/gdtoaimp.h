@@ -39,7 +39,7 @@ THIS SOFTWARE.
 
 /* On a machine with IEEE extended-precision registers, it is
  * necessary to specify double-precision (53-bit) rounding precision
- * before invoking strtod or dtoa.  If the machine uses (the equivalent
+ * before invoking strtod_gdtoa or dtoa.  If the machine uses (the equivalent
  * of) Intel 80x87 arithmetic, the call
  *	_control87(PC_53, MCW_PC);
  * does this with many compilers.  Whether this or another call is
@@ -48,9 +48,9 @@ THIS SOFTWARE.
  * file.
  */
 
-/* strtod for IEEE-, VAX-, and IBM-arithmetic machines.
+/* strtod_gdtoa for IEEE-, VAX-, and IBM-arithmetic machines.
  *
- * This strtod returns a nearest machine number to the input decimal
+ * This strtod_gdtoa returns a nearest machine number to the input decimal
  * string (or sets errno to ERANGE).  With IEEE arithmetic, ties are
  * broken by the IEEE round-even rule.  Otherwise ties are broken by
  * biased rounding (add half and chop).
@@ -133,13 +133,13 @@ THIS SOFTWARE.
  *	such as decimal-to-binary conversion of a very long string of
  *	digits.  When converting IEEE double precision values, the
  *	longest string gdtoa can return is about 751 bytes long.  For
- *	conversions by strtod of strings of 800 digits and all gdtoa
+ *	conversions by strtod_gdtoa of strings of 800 digits and all gdtoa
  *	conversions of IEEE doubles in single-threaded executions with
  *	8-byte pointers, PRIVATE_MEM >= 7400 appears to suffice; with
  *	4-byte pointers, PRIVATE_MEM >= 7112 appears adequate.
  * #define NO_INFNAN_CHECK if you do not wish to have INFNAN_CHECK
  *	#defined automatically on IEEE systems.  On such systems,
- *	when INFNAN_CHECK is #defined, strtod checks
+ *	when INFNAN_CHECK is #defined, strtod_gdtoa checks
  *	for Infinity and NaN (case insensitively).
  *	When INFNAN_CHECK is #defined and No_Hex_NaN is not #defined,
  *	strtodg also accepts (case insensitively) strings of the form
@@ -164,11 +164,11 @@ THIS SOFTWARE.
  *	dtoa.  You may do so whether or not MULTIPLE_THREADS is #defined.
  * #define IMPRECISE_INEXACT if you do not care about the setting of
  *	the STRTOG_Inexact bits in the special case of doing IEEE double
- *	precision conversions (which could also be done by the strtod in
+ *	precision conversions (which could also be done by the strtod_gdtoa in
  *	dtoa.c).
  * #define NO_HEX_FP to disable recognition of C9x's hexadecimal
  *	floating-point constants.
- * #define -DNO_ERRNO to suppress setting errno (in strtod.c and
+ * #define -DNO_ERRNO to suppress setting errno (in strtod_gdtoa.c and
  *	strtodg.c).
  * #define NO_STRING_H to use private versions of memcpy.
  *	On some K&R systems, it may also be necessary to
@@ -573,9 +573,9 @@ extern void memcpy_D2A ANSI((void*, const void*, size_t));
  extern Bigint *set_ones ANSI((Bigint*, int));
  extern char *strcp ANSI((char*, const char*));
  extern int strtoIg ANSI((CONST char*, char**, FPI*, Long*, Bigint**, int*));
-#ifndef _INC_STDLIB
- extern double strtod ANSI((const char *s00, char **se));
-#endif
+ 
+ extern double strtod_gdtoa ANSI((const char *s00, char **se));
+ 
  extern Bigint *sum ANSI((Bigint*, Bigint*));
  extern int trailz ANSI((Bigint*));
  extern double ulp ANSI((U*));
@@ -584,7 +584,7 @@ extern void memcpy_D2A ANSI((void*, const void*, size_t));
 }
 #endif
 /*
- * NAN_WORD0 and NAN_WORD1 are only referenced in strtod.c.  Prior to
+ * NAN_WORD0 and NAN_WORD1 are only referenced in strtod_gdtoa.c.  Prior to
  * 20050115, they used to be hard-wired here (to 0x7ff80000 and 0,
  * respectively), but now are determined by compiling and running
  * qnan.c to generate gd_qnan.h, which specifies d_QNAN0 and d_QNAN1.

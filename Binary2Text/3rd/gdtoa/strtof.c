@@ -30,13 +30,13 @@ THIS SOFTWARE.
  * with " at " changed at "@" and " dot " changed to ".").	*/
 
 #include "gdtoaimp.h"
-#ifndef _INC_STDLIB
+ 
 #if !defined(__flash__)
  float
 #ifdef KR_headers
-strtof(s, sp) CONST char *s; char **sp;
+	 strtof_gdtoa(s, sp) CONST char *s; char **sp;
 #else
-strtof(CONST char *s, char **sp)
+strtof_gdtoa(CONST char *s, char **sp)
 #endif
 {
 	static FPI fpi0 = { 24, 1-127-24+1,  254-127-24+1, 1, SI, Int_max };
@@ -78,4 +78,4 @@ strtof(CONST char *s, char **sp)
 	return u.f;
 	}
 #endif
-#endif
+ 

@@ -6,8 +6,8 @@
 #include <string>
 #include "../3rd/gdtoa/gdtoa.h"
 
-const int kMaxFloatDigits = std::floor(std::numeric_limits<float>::digits * 3010.0 / 10000.0 + 2);
-const int kMaxDoubleDigits = std::floor(std::numeric_limits<double>::digits * 3010.0 / 10000.0 + 2);
+const int kMaxFloatDigits = (int)std::floor(std::numeric_limits<float>::digits * 3010.0f / 10000.0f + 2);
+const int kMaxDoubleDigits = (int)std::floor(std::numeric_limits<double>::digits * 3010.0f / 10000.0f + 2);
 
 bool FloatToStringAccurate(float f, char* buffer, size_t maximumSize)
 {
@@ -16,6 +16,21 @@ bool FloatToStringAccurate(float f, char* buffer, size_t maximumSize)
 
 bool DoubleToStringAccurate(double f, char* buffer, size_t maximumSize)
 {
+	//经过测试，g_dfmt比标准库更加精确
+	/*
+		double data = 9999.123456789;
+		char valueStr[64];
+		if (DoubleToStringAccurate(data, valueStr, 64))
+		{
+			std::string t = std::to_string(data);
+			char buffer_max[20];
+			sprintf_s(buffer_max, "%f", data);
+			int i = 0;
+		}
+		t 和 buffer_max 的值是"9999.123456789"，但是在debug模式下data的值是9999.1234567890006，
+		最后面的0006被舍弃掉了。
+		而 g_dfmt或者DoubleToStringAccurate 的输出就是"9999.1234567890006",是严格精确的
+	*/
 	return g_dfmt(buffer, (double*)&f, kMaxDoubleDigits, maximumSize) != NULL;
 }
 
@@ -41,12 +56,12 @@ void HexStringToBytes(const char* str, size_t bytes, void *data)
 }
 float StringToFloatAccurate(const char* buffer)
 {
-	return strtof(buffer, NULL);
+	return strtof_gdtoa(buffer, NULL);
 }
 
 double StringToDoubleAccurate(const char* buffer)
 {
-	return strtod(buffer, NULL);
+	return strtod_gdtoa(buffer, NULL);
 }
 
 void BytesToHexString(const void *data, size_t bytes, char* str)
