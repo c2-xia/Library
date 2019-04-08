@@ -17,5 +17,4 @@ struct _Vector3 {
 		};
 		real coord[3];
 	};
-
 };
