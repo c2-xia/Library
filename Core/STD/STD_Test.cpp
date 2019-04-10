@@ -1,7 +1,9 @@
 #include "dynamic_array.h"
-
+#include "vector_map.h"
+#include "vector_set.h"
+#include <string>
 #include "../UnitTest++/UnitTestPP.h"
-
+ 
 
 using namespace UnitTest;
 
@@ -272,5 +274,37 @@ namespace {
 		CHECK_EQUAL(2, vs[1]);
 	}
 
+	TEST(Test_vector_map)
+	{
+		struct Student
+		{
+			int age;  
+		};
+		vector_map<int, Student> id_name;
+		id_name[0].age = 20; 
+		id_name[1].age = 0; 
+		CHECK_EQUAL(20, id_name[0].age);
+		CHECK_EQUAL(2, id_name.size());
+	
+		size_t p1 = (size_t)&id_name[0];
+		size_t p2 = (size_t)&id_name[1];
+		size_t t1 = sizeof(vector_map<int, Student>::value_type);
+		size_t t2 = ((p2- p1));
+		CHECK(t1 == t2);
+	}
 
+	TEST(Test_vector_set)
+	{
+		vector_set<int> ids;
+		ids.insert(9);
+		ids.insert(0);
+		ids.insert(7);
+		vector_set<int>::iterator it = ids.begin();
+		CHECK_EQUAL(0, *it);
+		CHECK_EQUAL(7, *(it+1));
+		CHECK_EQUAL(9, *(it+2));
+	}
+
+
+ 
 }

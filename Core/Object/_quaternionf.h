@@ -19,7 +19,7 @@ struct Quaternion {
 
 	const Quaternion & operator=(Quaternion::Arg v);
 	const Quaternion & operator*=(real s);
-	inline Quaternion&	Quaternion::operator /= (const real     	aScalar);
+	inline Quaternion&	Quaternion::operator /= (const real aScalar);
 	const real& operator [] (int i)const { return coord[i]; }
 	real& operator [] (int i) { return coord[i]; }
 
@@ -47,8 +47,7 @@ inline const Quaternion & Quaternion::operator*=(real s) {
 }
 
 inline Quaternion&	Quaternion::operator /= (const real     	aScalar)
-{
-	//AssertIf(CompareApproximately(aScalar, 0.0F));
+{ 
 	x /= aScalar;
 	y /= aScalar;
 	z /= aScalar;

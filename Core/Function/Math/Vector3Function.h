@@ -3,7 +3,7 @@
 #include "Object/_vector3.h"
 
 
-_Vector3& Scale(_Vector3& _this, const _Vector3& inV)
+inline _Vector3& Scale(_Vector3& _this, const _Vector3& inV)
 {
 	_this.x *= inV.x;
 	_this.y *= inV.y;
@@ -11,7 +11,7 @@ _Vector3& Scale(_Vector3& _this, const _Vector3& inV)
 	return _this;
 }
 
-_Vector3 Cross(const _Vector3& lhs, const _Vector3& rhs)
+inline _Vector3 Cross(const _Vector3& lhs, const _Vector3& rhs)
 {
 	return _Vector3(
 		lhs.y * rhs.z - lhs.z * rhs.y,
@@ -19,12 +19,12 @@ _Vector3 Cross(const _Vector3& lhs, const _Vector3& rhs)
 		lhs.x * rhs.y - lhs.y * rhs.x);
 }
 
-real Dot(const _Vector3& lhs, const _Vector3& rhs)
+inline real Dot(const _Vector3& lhs, const _Vector3& rhs)
 {
 	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 }
 
-real SqrMagnitude(const _Vector3& inV)
+inline real SqrMagnitude(const _Vector3& inV)
 {
 	return Dot(inV, inV);
 }
@@ -59,7 +59,7 @@ inline _Vector3 Project(const _Vector3& v1, const _Vector3& v2)
 	return v2 * Dot(v1, v2) / Dot(v2, v2);
 }
 
-bool CompareApproximately(const _Vector3& inV0, const _Vector3& inV1, const float inMaxDist = _Vector3::epsilon)
+inline bool CompareApproximately(const _Vector3& inV0, const _Vector3& inV1, const float inMaxDist = _Vector3::epsilon)
 { 
 	return SqrMagnitude(inV1 - inV0) < inMaxDist * inMaxDist;
 }
