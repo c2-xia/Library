@@ -81,14 +81,14 @@ void* operator new (size_t size) THROWING_NEW_THROW
 	if(New_G_Values::Instance!=NULL) 
 		New_G_Values::Instance->value = 20195;
 #endif
-	return XIA_LL_ALLOC(kMemNewDelete, size, kDefaultMemoryAlignment); 
+	return XIA_LL_ALLOC(kMemNewDelete, size, DefaultMemoryAlignment); 
 }
 void* operator new[](size_t size) THROWING_NEW_THROW{
 	#if _DEBUG
 	if (New_G_Values::Instance != NULL)
 		New_G_Values::Instance->value = 20196;
 #endif
-	return XIA_LL_ALLOC(kMemNewDelete, size, kDefaultMemoryAlignment);
+	return XIA_LL_ALLOC(kMemNewDelete, size, DefaultMemoryAlignment);
 }
 void operator delete (void* p) throw() {
 #if _DEBUG
@@ -106,10 +106,10 @@ void operator delete [](void* p) throw() {
 }
 
 void* operator new (size_t size, const std::nothrow_t&) throw() {
-	return XIA_LL_ALLOC(kMemNewDelete, size, kDefaultMemoryAlignment);
+	return XIA_LL_ALLOC(kMemNewDelete, size, DefaultMemoryAlignment);
 }
 void* operator new [](size_t size, const std::nothrow_t&) throw() { 
-	return XIA_LL_ALLOC(kMemNewDelete, size, kDefaultMemoryAlignment);
+	return XIA_LL_ALLOC(kMemNewDelete, size, DefaultMemoryAlignment);
 };
 void operator delete (void* p, const std::nothrow_t&) throw() {
 	XIA_LL_FREE(kMemNewDelete, p); 

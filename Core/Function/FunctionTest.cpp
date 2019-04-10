@@ -2,7 +2,7 @@
 
 #include "defines.h"
 #include "Object/_Vector3.h"
-#include "Operator/Operator.h"
+#include "Object/_quaternionf.h"
 #include "Math/Lerp.h"
 #include "Math/Floor.h"
 #include "Math/Repeat.h"
@@ -29,15 +29,21 @@ namespace {
     
 	TEST(FloorTest)
 	{ 
-		CHECK_EQUAL(Floor(2.3f), 2);
-		CHECK_EQUAL(Floor(0.6f), 0);
-		CHECK_EQUAL(Floor(-2.3f), -3);
+		CHECK_EQUAL(Floorf(2.3f), 2);
+		CHECK_EQUAL(Floorf(0.6f), 0);
+		CHECK_EQUAL(Floorf(-2.3f), -3);
+
+		CHECK_EQUAL(Floord(2.3), 2);
+		CHECK_EQUAL(Floord(0.6), 0);
+		CHECK_EQUAL(Floord(-2.3), -3);
 	}
 
 	TEST(RepeatTest)
 	{
-		real v = Repeat(5.0f, 4.5f);
+		float v = Repeatf(5.0f, 4.5f);
 		CHECK_EQUAL(v, 0.5);
+		double v2 = Repeatd(5.0, 4.5);
+		CHECK_EQUAL(v2, 0.5);
 	}
 
 }

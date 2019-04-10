@@ -30,7 +30,7 @@ namespace {
 	}
 
 	TEST(DynamicArray)
-	{
+	{ 
 		// no allocation for empty array
 		dynamic_array<int> array;
 		CHECK_EQUAL(0, array.capacity());
