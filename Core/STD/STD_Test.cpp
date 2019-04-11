@@ -305,6 +305,5 @@ namespace {
 		CHECK_EQUAL(9, *(it+2));
 	}
 
-
- 
+	 
 }

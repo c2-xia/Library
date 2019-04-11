@@ -186,10 +186,124 @@ struct Trait<std::string> :public YAMLTraitsForBasicType<bool>
 	 
 };
 
+#include <vector>
+#include <list>
+#include <map>
+template<class T>
+inline void resize_trimmed(T& v, unsigned int sz)
+{
+	// the vector is growing
+	if (sz > v.size())
+	{
+		if (sz != v.capacity())
+		{
+			T temp(v.get_allocator());
+			temp.reserve(sz);
+			temp.assign(v.begin(), v.end());
+			temp.resize(sz);
+			temp.swap(v);
+		}
+		else
+			v.resize(sz);
+	}
+	// the vector is shrinking
+	else if (sz < v.size())
+	{
+		T temp(v.begin(), v.begin() + sz, v.get_allocator());
+		temp.swap(v);
+	}
+}
+template<class T, class Allocator>
+struct Trait<std::vector<T, Allocator>>  
+{
+	typedef std::vector<T, Allocator>	value_type;
+	template<typename TransferFunction>
+	inline static void transfer(TransferFunction& function, value_type& value)
+	{
+		function.TransferSTLStyleArray(value);
+	} 
+	static void ResizeSTLStyleArray(value_type& data, int rs) { resize_trimmed(data, rs); }
+};
+
+
+template<class T, class Allocator>
+class Trait<std::list<T, Allocator> >  
+{
+public:
+	typedef std::list<T, Allocator>	value_type;
+ 
+
+		template<class TransferFunction> inline
+		static void transfer(TransferFunction& function,value_type& data)
+	{
+		function.TransferSTLStyleArray(data);
+	} 
+	static void ResizeSTLStyleArray(value_type& data, int rs) { data.resize(rs); }
+};
+
+
+template<class FirstClass, class SecondClass>
+class Trait<std::pair<FirstClass, SecondClass> >  
+{
+public: 
+	typedef std::pair<FirstClass, SecondClass>	value_type;
+
+	template<class TransferFunction> inline
+		static void transfer(TransferFunction& function, value_type& data)
+	{
+		function.Transfer(data.first, "first");
+		function.Transfer(data.second, "second");
+	}
+};
+
+
+template<class FirstClass, class SecondClass, class Compare, class Allocator>
+class Trait<std::map<FirstClass, SecondClass, Compare, Allocator> > 
+{
+public: 
+	typedef std::map<FirstClass, SecondClass, Compare, Allocator>	value_type;
+
+		template<class TransferFunction> inline
+		static void transfer(TransferFunction& function, value_type& data)
+	{
+		//AssertIf(transfer.IsRemapPPtrTransfer() && SerializeTraits<FirstClass>::MightContainPPtr() && transfer.IsReadingPPtr());
+			function.TransferSTLStyleMap(data);
+	}
+};
 
 
 
+template<class FirstClass, class SecondClass, class Compare, class Allocator>
+class Trait<std::multimap<FirstClass, SecondClass, Compare, Allocator> > 
+{
+public:
 
+	typedef std::multimap<FirstClass, SecondClass, Compare, Allocator>	value_type;
+		template<class TransferFunction> inline
+		static void transfer(TransferFunction& function, value_type& data)
+		{
+			//AssertIf(transfer.IsRemapPPtrTransfer() && SerializeTraits<FirstClass>::MightContainPPtr() && transfer.IsReadingPPtr());
+				function.TransferSTLStyleMap(data);
+		}
+};
+
+
+
+template<class T, class Compare, class Allocator>
+class Trait<std::set<T, Compare, Allocator> >
+{
+public:
+
+	typedef std::set<T, Compare, Allocator>	value_type;
+ 
+
+		template<class TransferFunction> inline
+		static void transfer(TransferFunction& function, value_type& data)
+		{
+			//AssertIf(transfer.IsRemapPPtrTransfer() && transfer.IsReadingPPtr());
+				function.TransferSTLStyleMap(data);
+		}
+};
 template<class T>
 struct NonConstContainerValueType
 {
